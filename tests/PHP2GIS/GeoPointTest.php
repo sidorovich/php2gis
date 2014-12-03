@@ -3,6 +3,7 @@
 namespace PHP2GIS;
 
 use PHP2GIS\Angle\Latitude;
+use PHP2GIS\Angle\Longitude;
 
 /**
  * Class GeoPointTest
@@ -35,5 +36,59 @@ class GeoPointTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('PHP2GIS\GeoPoint', $point->setLatitude(new Latitude(-58)));
         $this->assertEquals(-58.0, $point->getLatitude()->getFloatValue());
+    }
+
+    public function testLongitude()
+    {
+        $point = new GeoPoint(54, new Longitude(28));
+
+        $this->assertInstanceOf('PHP2GIS\Angle\Longitude', $point->getLongitude());
+        $this->assertEquals(28.0, $point->getLongitude()->getFloatValue());
+
+        $this->assertInstanceOf('PHP2GIS\GeoPoint', $point->setLongitude(33.5));
+        $this->assertEquals(33.5, $point->getLongitude()->getFloatValue());
+
+        $this->assertInstanceOf('PHP2GIS\GeoPoint', $point->setLongitude(new Longitude(-25.25)));
+        $this->assertEquals(-25.25, $point->getLongitude()->getFloatValue());
+    }
+
+    public function testEqual()
+    {
+        $point1 = new GeoPoint(54, 27);
+        $this->assertTrue($point1->isEqual($point1));
+
+        $point2 = new GeoPoint(54, 27.1);
+
+        $tests = [
+        //  result, lat point 1  , long point 1 , lat point 2  , long point 2
+            [false, 54           , 27           , 54           , 27.1         ],
+            [true , 54.1234567895, 27.1234567895, 54.1234567892, 27.1234567891],
+            [false, 54.1234567895, 27.1234567895, 54.1234567892, 27.12345678  ],
+            [false, 54.1234567895, 27.1234567895, 54.12345678  , 27.1234567891],
+            [false, 54.1234567895, 27.12345678  , 54.1234567892, 27.1234567891],
+            [false, 54.12345678  , 27.1234567895, 54.1234567892, 27.1234567891],
+            [false, 54.12345678  , 27.1234567895, 54.1234567892, 27.12345678  ],
+            [true , 54.12345678  , 27.1234567895, 54.12345678  , 27.1234567891],
+            [true , 54.1234567895, 27.12345678  , 54.1234567892, 27.12345678  ],
+            [false, 54.12345678  , 27.12345678  , 54.1234567892, 27.1234567891],
+            [false, 54.12345678  , 27.12345678  , 54.1234567892, 27.12345678  ],
+            [false, 54.12345678  , 27.12345678  , 54.12345678  , 27.1234567891],
+            [true , 54.12345678  , 27.12345678  , 54.12345678  , 27.12345678  ],
+        ];
+
+        foreach ($tests as $test) {
+            $point1->getLatitude()->setFloatValue($test[1]);
+            $point1->getLongitude()->setFloatValue($test[2]);
+            $point2->getLatitude()->setFloatValue($test[3]);
+            $point2->getLongitude()->setFloatValue($test[4]);
+
+            if ($test[0]) {
+                $this->assertTrue($point1->isEqual($point2));
+                $this->assertTrue($point2->isEqual($point1));
+            } else {
+                $this->assertFalse($point1->isEqual($point2));
+                $this->assertFalse($point2->isEqual($point1));
+            }
+        }
     }
 }
