@@ -26,15 +26,24 @@ class GeoPoint
     protected $longitude;
 
     /**
+     * @var Ellipsoid
+     */
+    protected $ellipsoid;
+
+    /**
      * Create geo-point
      *
-     * @param float|Latitude  $latitude
-     * @param float|Longitude $longitude
+     * @param float|Latitude   $latitude
+     * @param float|Longitude  $longitude
+     * @param string|Ellipsoid $ellipsoid
      */
-    public function __construct($latitude, $longitude)
+    public function __construct($latitude, $longitude, $ellipsoid = Ellipsoid::ELLIPSOID_WGS84)
     {
-        $this->setLatitude($latitude);
-        $this->setLongitude($longitude);
+        $this
+            ->setLatitude($latitude)
+            ->setLongitude($longitude)
+            ->setEllipsoid($ellipsoid)
+        ;
     }
 
     /**
@@ -45,7 +54,7 @@ class GeoPoint
      */
     public function setLatitude($latitude)
     {
-        if (is_object($latitude) && $latitude instanceof Latitude) {
+        if ($latitude instanceof Latitude) {
             $this->latitude = $latitude;
         } else {
             $this->latitude = new Latitude($latitude);
@@ -72,15 +81,18 @@ class GeoPoint
      */
     public function setLongitude($longitude)
     {
-        if (is_object($longitude) && $longitude instanceof Longitude) {
+        if ($longitude instanceof Longitude) {
             $this->longitude = $longitude;
         } else {
             $this->longitude = new Longitude($longitude);
         }
+
         return $this;
     }
 
     /**
+     * Get longitude
+     *
      * @return Longitude
      */
     public function getLongitude()
@@ -89,11 +101,42 @@ class GeoPoint
     }
 
     /**
+     * True if 2 points have an equal coordinates on the same ellipsoid
+     *
      * @param GeoPoint $point
      * @return bool
      */
     public function isEqual(GeoPoint $point)
     {
-        return ($this->latitude->isEqual($point->getLatitude()) && $this->longitude->isEqual($point->getLongitude()));
+        return $this->ellipsoid == $point->getEllipsoid()
+            and $this->latitude->isEqual($point->getLatitude())
+            and $this->longitude->isEqual($point->getLongitude());
+    }
+
+    /**
+     * Set ellipsoid
+     *
+     * @param string|Ellipsoid $ellipsoid
+     * @return $this
+     */
+    public function setEllipsoid($ellipsoid)
+    {
+        if ($ellipsoid instanceof Ellipsoid) {
+            $this->ellipsoid = $ellipsoid;
+        } else {
+            $this->ellipsoid = Ellipsoid::create($ellipsoid);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get ellipsoid
+     *
+     * @return Ellipsoid
+     */
+    public function getEllipsoid()
+    {
+        return $this->ellipsoid;
     }
 }

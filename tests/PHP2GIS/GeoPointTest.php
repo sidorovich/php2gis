@@ -1,9 +1,9 @@
 <?php
 
-namespace PHP2GIS;
-
 use PHP2GIS\Angle\Latitude;
 use PHP2GIS\Angle\Longitude;
+use PHP2GIS\Ellipsoid;
+use PHP2GIS\GeoPoint;
 
 /**
  * Class GeoPointTest
@@ -52,6 +52,19 @@ class GeoPointTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(-25.25, $point->getLongitude()->getFloatValue());
     }
 
+    public function testEllipsoid()
+    {
+        $point = new GeoPoint(54, new Longitude(28));
+
+        $this->assertEquals(Ellipsoid::create(), $point->getEllipsoid());
+
+        $this->assertInstanceOf('PHP2GIS\GeoPoint', $point->setEllipsoid(Ellipsoid::ELLIPSOID_PZ90));
+        $this->assertEquals(Ellipsoid::create(Ellipsoid::ELLIPSOID_PZ90), $point->getEllipsoid());
+
+        $this->assertInstanceOf('PHP2GIS\GeoPoint', $point->setEllipsoid(Ellipsoid::create(Ellipsoid::ELLIPSOID_SK42)));
+        $this->assertEquals(Ellipsoid::create(Ellipsoid::ELLIPSOID_SK42), $point->getEllipsoid());
+    }
+
     public function testEqual()
     {
         $point1 = new GeoPoint(54, 27);
@@ -59,28 +72,34 @@ class GeoPointTest extends \PHPUnit_Framework_TestCase
 
         $point2 = new GeoPoint(54, 27.1);
 
+        $WGS84 = Ellipsoid::ELLIPSOID_WGS84;
+        $PZ90  = Ellipsoid::ELLIPSOID_PZ90;
+
         $tests = [
-        //  result, lat point 1  , long point 1 , lat point 2  , long point 2
-            [false, 54           , 27           , 54           , 27.1         ],
-            [true , 54.1234567895, 27.1234567895, 54.1234567892, 27.1234567891],
-            [false, 54.1234567895, 27.1234567895, 54.1234567892, 27.12345678  ],
-            [false, 54.1234567895, 27.1234567895, 54.12345678  , 27.1234567891],
-            [false, 54.1234567895, 27.12345678  , 54.1234567892, 27.1234567891],
-            [false, 54.12345678  , 27.1234567895, 54.1234567892, 27.1234567891],
-            [false, 54.12345678  , 27.1234567895, 54.1234567892, 27.12345678  ],
-            [true , 54.12345678  , 27.1234567895, 54.12345678  , 27.1234567891],
-            [true , 54.1234567895, 27.12345678  , 54.1234567892, 27.12345678  ],
-            [false, 54.12345678  , 27.12345678  , 54.1234567892, 27.1234567891],
-            [false, 54.12345678  , 27.12345678  , 54.1234567892, 27.12345678  ],
-            [false, 54.12345678  , 27.12345678  , 54.12345678  , 27.1234567891],
-            [true , 54.12345678  , 27.12345678  , 54.12345678  , 27.12345678  ],
+        //  result, lat point 1  , long point 1 , lat point 2  , long point 2, Ellipsoid 1, Ellipsoid 2,
+            [false, 54           , 27           , 54           , 27.1         , $WGS84    , $WGS84     ,],
+            [true , 54.1234567895, 27.1234567895, 54.1234567892, 27.1234567891, $WGS84    , $WGS84     ,],
+            [false, 54.1234567895, 27.1234567895, 54.1234567892, 27.12345678  , $WGS84    , $WGS84     ,],
+            [false, 54.1234567895, 27.1234567895, 54.12345678  , 27.1234567891, $WGS84    , $WGS84     ,],
+            [false, 54.1234567895, 27.12345678  , 54.1234567892, 27.1234567891, $WGS84    , $WGS84     ,],
+            [false, 54.12345678  , 27.1234567895, 54.1234567892, 27.1234567891, $WGS84    , $WGS84     ,],
+            [false, 54.12345678  , 27.1234567895, 54.1234567892, 27.12345678  , $WGS84    , $WGS84     ,],
+            [true , 54.12345678  , 27.1234567895, 54.12345678  , 27.1234567891, $WGS84    , $WGS84     ,],
+            [true , 54.1234567895, 27.12345678  , 54.1234567892, 27.12345678  , $WGS84    , $WGS84     ,],
+            [false, 54.12345678  , 27.12345678  , 54.1234567892, 27.1234567891, $WGS84    , $WGS84     ,],
+            [false, 54.12345678  , 27.12345678  , 54.1234567892, 27.12345678  , $WGS84    , $WGS84     ,],
+            [false, 54.12345678  , 27.12345678  , 54.12345678  , 27.1234567891, $WGS84    , $WGS84     ,],
+            [true , 54.12345678  , 27.12345678  , 54.12345678  , 27.12345678  , $WGS84    , $WGS84     ,],
+            [false, 54.1234567895, 27.1234567895, 54.1234567892, 27.1234567891, $WGS84    , $PZ90      ,],
         ];
 
         foreach ($tests as $test) {
             $point1->getLatitude()->setFloatValue($test[1]);
             $point1->getLongitude()->setFloatValue($test[2]);
+            $point1->setEllipsoid($test[5]);
             $point2->getLatitude()->setFloatValue($test[3]);
             $point2->getLongitude()->setFloatValue($test[4]);
+            $point2->setEllipsoid($test[6]);
 
             if ($test[0]) {
                 $this->assertTrue($point1->isEqual($point2));

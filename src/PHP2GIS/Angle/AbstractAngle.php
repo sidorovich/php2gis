@@ -160,10 +160,10 @@ abstract class AbstractAngle
     /**
      * Format current angle value
      *
-     * @param IAngleFormatter $formatter
+     * @param AngleFormatterInterface $formatter
      * @return mixed
      */
-    public function format(IAngleFormatter $formatter)
+    public function format(AngleFormatterInterface $formatter)
     {
         return $formatter->formatAngle($this);
     }

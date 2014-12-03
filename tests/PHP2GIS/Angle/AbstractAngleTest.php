@@ -1,6 +1,10 @@
 <?php
 
-namespace PHP2GIS\Angle;
+use PHP2GIS\Angle\AbstractAngle;
+use PHP2GIS\Angle\AngleFormatterInterface;
+use PHP2GIS\Angle\Latitude;
+use PHP2GIS\Angle\Longitude;
+use PHP2GIS\Angle\PlaneAngle;
 
 /**
  * Class AbstractAngleTest
@@ -81,7 +85,7 @@ class AbstractAngleTest extends \PHPUnit_Framework_TestCase
     public function testFormat()
     {
         $angle = new Longitude(30.500123);
-        $this->assertEquals($angle->getFloatValue(), $angle->format(new TestAngleFormatter()));
+        $this->assertEquals($angle->getFloatValue(), $angle->format(new TestAngleFormatterInterface()));
     }
 
     public function testRadians()
@@ -108,7 +112,7 @@ class TestAngle extends Latitude
     const EPS = 1e-3;
 }
 
-class TestAngleFormatter implements IAngleFormatter
+class TestAngleFormatterInterface implements AngleFormatterInterface
 {
     public function formatAngle(AbstractAngle $angle)
     {

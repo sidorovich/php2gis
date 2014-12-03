@@ -3,14 +3,14 @@
 namespace PHP2GIS\Angle;
 
 /**
- * Interface IAngleFormatter
+ * Interface AngleFormatterInterface
  *
  * @package PHP2GIS\Angle
  * @since   2014-10-23
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT
  */
-interface IAngleFormatter
+interface AngleFormatterInterface
 {
     /**
      * Main method for formatting angle

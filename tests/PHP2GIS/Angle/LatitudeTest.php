@@ -1,6 +1,6 @@
 <?php
 
-namespace PHP2GIS\Angle;
+use PHP2GIS\Angle\Latitude;
 
 /**
  * Class LatitudeTest
@@ -29,13 +29,11 @@ class LatitudeTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\InvalidArgumentException');
         $angle = new Latitude(-90.01);
-        $this->getExpectedException();
     }
 
     public function testAboveMaximumFloatValue()
     {
         $this->setExpectedException('\InvalidArgumentException');
         $angle = new Latitude(90.001);
-        $this->getExpectedException();
     }
 }

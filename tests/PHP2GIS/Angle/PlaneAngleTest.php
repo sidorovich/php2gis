@@ -1,6 +1,6 @@
 <?php
 
-namespace PHP2GIS\Angle;
+use PHP2GIS\Angle\PlaneAngle;
 
 /**
  * Class PlaneAngleTest
@@ -26,13 +26,11 @@ class PlaneAngleTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\InvalidArgumentException');
         $angle = new PlaneAngle(-1);
-        $this->getExpectedException();
     }
 
     public function testAboveMaximumFloatValue()
     {
         $this->setExpectedException('\InvalidArgumentException');
         $angle = new PlaneAngle(360.5);
-        $this->getExpectedException();
     }
 }
