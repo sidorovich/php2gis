@@ -1,7 +1,7 @@
 <?php
 
 use PHP2GIS\Angle\AbstractAngle;
-use PHP2GIS\Angle\AngleFormatterInterface;
+use PHP2GIS\Angle\Formatter\AngleFormatterInterface;
 use PHP2GIS\Angle\Latitude;
 use PHP2GIS\Angle\Longitude;
 use PHP2GIS\Angle\PlaneAngle;
@@ -114,7 +114,7 @@ class TestAngle extends Latitude
 
 class TestAngleFormatterInterface implements AngleFormatterInterface
 {
-    public function formatAngle(AbstractAngle $angle)
+    public function format(AbstractAngle $angle)
     {
         return $angle->getFloatValue();
     }

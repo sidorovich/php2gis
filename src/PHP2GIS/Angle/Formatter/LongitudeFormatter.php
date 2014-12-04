@@ -17,5 +17,6 @@ class LongitudeFormatter extends LatitudeFormatter
     protected static $TEMPLATES = [
         self::TEMPLATE_DDMMSS_SPACES => '%03d %02d %02d',
         self::TEMPLATE_DDMMSS_SIGNS  => '%03d°%02d′%02d″',
+        self::TEMPLATE_DDDMMSSs_DOTS => '%03d.%02d.%s',
     ];
 }

@@ -13,21 +13,10 @@ use PHP2GIS\Angle\PlaneAngle;
  */
 class PlaneAngleFormatterTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var PlaneAngleFormatter
-     */
-    protected $formatter;
-
-    public function setUp()
-    {
-        $this->formatter = new PlaneAngleFormatter();
-    }
-
     public function testInvalidFormat()
     {
         $this->setExpectedException('\InvalidArgumentException');
-        $angle = new PlaneAngle(54.27);
-        $this->formatter->formatAngle($angle, -1);
+        $formatter = new PlaneAngleFormatter(-1);
     }
 
     public function testFormatter()
@@ -62,8 +51,9 @@ class PlaneAngleFormatterTest extends \PHPUnit_Framework_TestCase
         ];
 
         foreach ($testCases as $test) {
+            $formatter = new PlaneAngleFormatter($test[1]);
             $angle = new PlaneAngle($test[0]);
-            $this->assertEquals($test[2], $this->formatter->formatAngle($angle, $test[1]));
+            $this->assertEquals($test[2], $angle->format($formatter));
         }
     }
 }

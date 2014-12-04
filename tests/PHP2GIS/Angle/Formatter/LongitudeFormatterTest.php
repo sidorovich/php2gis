@@ -7,10 +7,9 @@ class LongitudeFormatterTest extends \PHPUnit_Framework_TestCase
 {
     public function testLongitudeFormatter()
     {
-        $formatter = new LongitudeFormatter();
-
         $SIGNS  = LongitudeFormatter::TEMPLATE_DDMMSS_SIGNS;
         $SPACES = LongitudeFormatter::TEMPLATE_DDMMSS_SPACES;
+        $DOTS   = LongitudeFormatter::TEMPLATE_DDDMMSSs_DOTS;
 
         $LEADING = LongitudeFormatter::SYMBOL_LEADING;
         $ENDING  = LongitudeFormatter::SYMBOL_ENDING;
@@ -30,11 +29,25 @@ class LongitudeFormatterTest extends \PHPUnit_Framework_TestCase
             [   0.033349832535407, $SIGNS , $ENDING ,  '000°02′00″E',],
             [   0.0              , $SPACES, $LEADING, 'E000 00 00'  ,],
             [  -0.0              , $SIGNS , $ENDING ,  '000°00′00″E',],
+
+            // DDD.MM.SS.sss Format
+
+            [ -51.012257109868   , $DOTS  , $LEADING, 'W051.00.44.126',],
+            [  -3.911575630266   , $DOTS  , $LEADING, 'W003.54.41.672',],
+            [  41.612938745698   , $DOTS  , $LEADING, 'E041.36.46.579',],
+            [-119.12263504189    , $DOTS  , $LEADING, 'W119.07.21.486',],
+            [ -87.578980432627   , $DOTS  , $LEADING, 'W087.34.44.330',],
+            [  85.636183519678   , $DOTS  , $LEADING, 'E085.38.10.261',],
+            [  14.210918449895   , $DOTS  , $LEADING, 'E014.12.39.306',],
+            [  82.27291821608    , $DOTS  , $LEADING, 'E082.16.22.506',],
+            [   0.0              , $DOTS  , $LEADING, 'E000.00.00.000',],
+            [  -0.0              , $DOTS  , $LEADING, 'E000.00.00.000',],
         ];
 
         foreach ($testCases as $test) {
+            $formatter = new LongitudeFormatter($test[1], $test[2]);
             $angle = new Longitude($test[0]);
-            $this->assertEquals($test[3], $formatter->formatAngle($angle, $test[1], $test[2]));
+            $this->assertEquals($test[3], $angle->format($formatter));
         }
     }
 }

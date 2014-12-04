@@ -1,6 +1,8 @@
 <?php
 
-namespace PHP2GIS\Angle;
+namespace PHP2GIS\Angle\Formatter;
+
+use PHP2GIS\Angle\AbstractAngle;
 
 /**
  * Interface AngleFormatterInterface
@@ -18,5 +20,5 @@ interface AngleFormatterInterface
      * @param AbstractAngle $angle
      * @return mixed
      */
-    public function formatAngle(AbstractAngle $angle);
+    public function format(AbstractAngle $angle);
 }

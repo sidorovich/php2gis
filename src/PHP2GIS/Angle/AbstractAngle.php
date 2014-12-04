@@ -2,6 +2,8 @@
 
 namespace PHP2GIS\Angle;
 
+use PHP2GIS\Angle\Formatter\AngleFormatterInterface;
+
 /**
  * Class AbstractAngle
  *
@@ -165,7 +167,7 @@ abstract class AbstractAngle
      */
     public function format(AngleFormatterInterface $formatter)
     {
-        return $formatter->formatAngle($this);
+        return $formatter->format($this);
     }
 
     /**

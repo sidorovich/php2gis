@@ -3,7 +3,6 @@
 namespace PHP2GIS\Angle\Formatter;
 
 use PHP2GIS\Angle\AbstractAngle;
-use PHP2GIS\Angle\AngleFormatterInterface;
 
 /**
  * Class PlaneAngleFormatter
@@ -17,30 +16,56 @@ class PlaneAngleFormatter implements AngleFormatterInterface
 {
     const TEMPLATE_DDMMSS_SPACES = 1;
     const TEMPLATE_DDMMSS_SIGNS  = 2;
+    const TEMPLATE_DDDMMSSs_DOTS = 3;
 
     protected static $TEMPLATES = [
         self::TEMPLATE_DDMMSS_SPACES => '%d %02d %02d',
         self::TEMPLATE_DDMMSS_SIGNS  => '%d°%02d′%02d″',
+        self::TEMPLATE_DDDMMSSs_DOTS => '%03d.%02d.%s',
     ];
+
+    protected $template;
+
+    public function __construct($template = self::TEMPLATE_DDMMSS_SPACES)
+    {
+        if (!isset(static::$TEMPLATES[$template])) {
+            throw new \InvalidArgumentException('Invalid format type');
+        }
+
+        $this->template = $template;
+    }
 
     /**
      * Main method for formatting angle
      *
      * @param AbstractAngle $angle
-     * @param int           $format
      * @return mixed
      */
-    public function formatAngle(AbstractAngle $angle, $format = self::TEMPLATE_DDMMSS_SPACES)
+    public function format(AbstractAngle $angle)
     {
-        if (!isset(static::$TEMPLATES[$format])) {
-            throw new \InvalidArgumentException('Invalid format type');
-        }
+        $seconds = $this->formatSeconds($angle);
 
         return sprintf(
-            static::$TEMPLATES[$format],
+            static::$TEMPLATES[$this->template],
             $angle->getDegrees(),
             $angle->getMinutes(),
-            round($angle->getSeconds())
+            $seconds
         );
+    }
+
+    /**
+     * @param AbstractAngle $angle
+     * @return string
+     */
+    protected function formatSeconds(AbstractAngle $angle)
+    {
+        if ($this->template == static::TEMPLATE_DDDMMSSs_DOTS) {
+            $seconds = number_format($angle->getSeconds(), 3);
+            $seconds = (($seconds < 10) ? '0' : '') . $seconds;
+        } else {
+            $seconds = round($angle->getSeconds());
+        }
+
+        return $seconds;
     }
 }

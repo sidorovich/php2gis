@@ -16,11 +16,9 @@ use PHP2GIS\Angle\PlaneAngle;
  */
 class VincentyCalculator
 {
-    protected $distance = 0.0;
-
     protected $precision = 1e-12;
 
-    protected $iterationsLimit = 100;
+    protected $iterationsLimit = 200;
 
     /**
      * @var PlaneAngle
@@ -31,14 +29,6 @@ class VincentyCalculator
      * @var PlaneAngle
      */
     protected $finalBearing;
-
-    /**
-     * @return float
-     */
-    public function getDistance()
-    {
-        return $this->distance;
-    }
 
     /**
      * @return PlaneAngle
@@ -57,7 +47,7 @@ class VincentyCalculator
     }
 
     /**
-     * Calculate distance in meters between two points
+     * Vincenty inverse calculation
      *
      * @param GeoPoint $point1
      * @param GeoPoint $point2
@@ -143,12 +133,11 @@ class VincentyCalculator
         $alpha1 = ($alpha1 + 2 * M_PI) % (2 * M_PI);
         $alpha2 = ($alpha2 + 2 * M_PI) % (2 * M_PI);
 
-        $this->distance = round($s, 4);
         $this->initialBearing = new PlaneAngle();
         $this->initialBearing->setRadians($alpha1);
         $this->finalBearing = new PlaneAngle();
         $this->finalBearing->setRadians($alpha2);
 
-        return $this->distance;
+        return round($s, 4);
     }
 }

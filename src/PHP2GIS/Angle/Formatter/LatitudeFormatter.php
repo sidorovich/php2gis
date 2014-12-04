@@ -22,25 +22,35 @@ class LatitudeFormatter extends PlaneAngleFormatter
     protected static $TEMPLATES = [
         self::TEMPLATE_DDMMSS_SPACES => '%02d %02d %02d',
         self::TEMPLATE_DDMMSS_SIGNS  => '%02d°%02d′%02d″',
+        self::TEMPLATE_DDDMMSSs_DOTS => '%03d.%02d.%s',
     ];
 
+    protected $symbolPosition;
 
     /**
-     * Main method for formatting angle
+     * @param int $template
+     * @param int $symbolPosition
+     */
+    public function __construct($template = self::TEMPLATE_DDMMSS_SPACES, $symbolPosition = self::SYMBOL_LEADING)
+    {
+        parent::__construct($template);
+        $this->symbolPosition = $symbolPosition;
+    }
+
+    /**
+     * Main method for formatting Latitude
      *
      * @param AbstractAngle $angle
-     * @param int           $format
-     * @param int           $symbolPosition
      * @return mixed
      */
-    public function formatAngle(AbstractAngle $angle, $format = self::TEMPLATE_DDMMSS_SPACES, $symbolPosition = self::SYMBOL_LEADING)
+    public function format(AbstractAngle $angle)
     {
         $angleCloned = clone $angle;
-        $string = parent::formatAngle($angleCloned->setDegrees(abs($angleCloned->getDegrees())), $format);
+        $string = parent::format($angleCloned->setDegrees(abs($angleCloned->getDegrees())), $this->template);
 
         $symbol = ($angle->getFloatValue() >= 0) ? static::$SYMBOLS[0] : static::$SYMBOLS[1];
 
-        if ($symbolPosition == self::SYMBOL_ENDING) {
+        if ($this->symbolPosition == self::SYMBOL_ENDING) {
             return $string . $symbol;
         } else {
             return $symbol . $string;
