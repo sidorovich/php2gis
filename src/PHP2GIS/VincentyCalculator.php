@@ -22,9 +22,39 @@ class VincentyCalculator
 
     protected $iterationsLimit = 100;
 
+    /**
+     * @var PlaneAngle
+     */
     protected $initialBearing;
 
+    /**
+     * @var PlaneAngle
+     */
     protected $finalBearing;
+
+    /**
+     * @return float
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @return PlaneAngle
+     */
+    public function getInitialBearing()
+    {
+        return $this->initialBearing;
+    }
+
+    /**
+     * @return PlaneAngle
+     */
+    public function getFinalBearing()
+    {
+        return $this->finalBearing;
+    }
 
     /**
      * Calculate distance in meters between two points

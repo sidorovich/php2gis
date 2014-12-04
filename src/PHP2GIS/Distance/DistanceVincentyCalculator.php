@@ -3,6 +3,7 @@
 namespace PHP2GIS\Distance;
 
 use PHP2GIS\GeoPoint;
+use PHP2GIS\VincentyCalculator;
 
 /**
  * Class DistanceCalculator
@@ -24,6 +25,7 @@ class DistanceVincentyCalculator implements DistanceCalculatorInterface
      */
     public function getDistance(GeoPoint $point1, GeoPoint $point2)
     {
-        // TODO: Implement getDistance() method.
+        $calculator = new VincentyCalculator();
+        return $calculator->inverseCalculation($point1, $point2);
     }
 }
