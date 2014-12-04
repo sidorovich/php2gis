@@ -21,17 +21,17 @@ class VincentyCalculator
     protected $iterationsLimit = 200;
 
     /**
-     * @var PlaneAngle
+     * @var null|PlaneAngle
      */
     protected $initialBearing;
 
     /**
-     * @var PlaneAngle
+     * @var null|PlaneAngle
      */
     protected $finalBearing;
 
     /**
-     * @return PlaneAngle
+     * @return null|PlaneAngle
      */
     public function getInitialBearing()
     {
@@ -39,7 +39,7 @@ class VincentyCalculator
     }
 
     /**
-     * @return PlaneAngle
+     * @return null|PlaneAngle
      */
     public function getFinalBearing()
     {
@@ -136,11 +136,14 @@ class VincentyCalculator
         $alpha1 = ($alpha1 >= 0) ? $alpha1 : ($alpha1 + 2 * M_PI);
         $alpha2 = ($alpha2 >= 0) ? $alpha2 : ($alpha2 + 2 * M_PI);
 
-        $this->initialBearing = new PlaneAngle();
-        $this->initialBearing->setRadians($alpha1);
-        $this->finalBearing = new PlaneAngle();
-        $this->finalBearing->setRadians($alpha2);
+        $s = round($s, 6);
+        if ($s > 0) {
+            $this->initialBearing = new PlaneAngle();
+            $this->initialBearing->setRadians($alpha1);
+            $this->finalBearing = new PlaneAngle();
+            $this->finalBearing->setRadians($alpha2);
+        }
 
-        return round($s, 4);
+        return $s;
     }
 }
