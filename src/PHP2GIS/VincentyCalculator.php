@@ -64,6 +64,9 @@ class VincentyCalculator
             );
         }
 
+        $this->initialBearing = null;
+        $this->finalBearing = null;
+
         $lat1 = $point1->getLatitude()->getRadians();
         $lon1 = $point1->getLongitude()->getRadians();
         $lat2 = $point2->getLatitude()->getRadians();
@@ -130,8 +133,8 @@ class VincentyCalculator
         $alpha1 = atan2($cosU2 * $sinLambda,  $cosU1 * $sinU2 - $sinU1 * $cosU2 * $cosLambda);
         $alpha2 = atan2($cosU1 * $sinLambda, -$sinU1 * $cosU2 + $cosU1 * $sinU2 * $cosLambda);
 
-        $alpha1 = ($alpha1 + 2 * M_PI) % (2 * M_PI);
-        $alpha2 = ($alpha2 + 2 * M_PI) % (2 * M_PI);
+        $alpha1 = ($alpha1 >= 0) ? $alpha1 : ($alpha1 + 2 * M_PI);
+        $alpha2 = ($alpha2 >= 0) ? $alpha2 : ($alpha2 + 2 * M_PI);
 
         $this->initialBearing = new PlaneAngle();
         $this->initialBearing->setRadians($alpha1);
