@@ -18,7 +18,7 @@ class VincentyCalculator
 {
     protected $precision = 1e-12;
 
-    protected $iterationsLimit = 200;
+    protected $iterationsLimit = 100;
 
     /**
      * @var null|PlaneAngle
