@@ -62,25 +62,25 @@ class EllipsoidTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidEllipsoidName()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $ellipsoid = Ellipsoid::create('FAKE_ELLIPSOID_' . uniqid());
     }
 
     public function testEmptyEllipsoidName()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $ellipsoid = Ellipsoid::createFromArray(['name' => '', 'a' => 6378137, 'f' => 298.257223563]);
     }
 
     public function testInvalidEllipsoidA()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $ellipsoid = Ellipsoid::createFromArray(['name' => 'TEST', 'f' => 298.257223563]);
     }
 
     public function testInvalidEllipsoidF()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $ellipsoid = Ellipsoid::createFromArray(['name' => 'TEST', 'a' => 6378137]);
     }
 }

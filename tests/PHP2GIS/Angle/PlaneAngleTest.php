@@ -24,13 +24,13 @@ class PlaneAngleTest extends \PHPUnit_Framework_TestCase
 
     public function testBelowMinimumFloatValue()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $angle = new PlaneAngle(-1);
     }
 
     public function testAboveMaximumFloatValue()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $angle = new PlaneAngle(360.5);
     }
 }

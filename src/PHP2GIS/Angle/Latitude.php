@@ -2,6 +2,8 @@
 
 namespace PHP2GIS\Angle;
 
+use PHP2GIS\Exception\InvalidArgumentException;
+
 /**
  * Class Latitude
  *
@@ -15,12 +17,12 @@ class Latitude extends AbstractAngle
     /**
      * @param float $value
      * @return $this
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function validateFloatValue($value)
     {
         if (($value < -90.0) || ($value > 90.0)) {
-            throw new \InvalidArgumentException("Latitude value must be in [-90..90]");
+            throw new InvalidArgumentException("Latitude value must be in [-90..90]");
         }
     }
 }

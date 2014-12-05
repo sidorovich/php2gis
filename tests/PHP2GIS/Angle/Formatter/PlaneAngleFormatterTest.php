@@ -15,7 +15,7 @@ class PlaneAngleFormatterTest extends \PHPUnit_Framework_TestCase
 {
     public function testInvalidFormat()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $formatter = new PlaneAngleFormatter(-1);
     }
 

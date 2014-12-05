@@ -27,13 +27,13 @@ class LongitudeTest extends \PHPUnit_Framework_TestCase
 
     public function testBelowMinimumFloatValue()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $angle = new Longitude(-180.01);
     }
 
     public function testAboveMaximumFloatValue()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $angle = new Longitude(180.001);
     }
 }

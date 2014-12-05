@@ -27,13 +27,13 @@ class LatitudeTest extends \PHPUnit_Framework_TestCase
 
     public function testBelowMinimumFloatValue()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $angle = new Latitude(-90.01);
     }
 
     public function testAboveMaximumFloatValue()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
         $angle = new Latitude(90.001);
     }
 }

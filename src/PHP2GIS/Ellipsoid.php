@@ -2,6 +2,8 @@
 
 namespace PHP2GIS;
 
+use PHP2GIS\Exception\InvalidArgumentException;
+
 /**
  * Class Ellipsoid
  *
@@ -100,13 +102,15 @@ class Ellipsoid
      * @param string $name
      *
      * @return Ellipsoid
+     *
+     * @throws InvalidArgumentException
      */
     public static function create($name = self::ELLIPSOID_WGS84)
     {
         if (isset(self::$ELLIPSOIDS[$name])) {
             return self::createFromArray(self::$ELLIPSOIDS[$name]);
         } else {
-            throw new \InvalidArgumentException('Non-exists ellipsoid name ' . $name);
+            throw new InvalidArgumentException('Non-exists ellipsoid name ' . $name);
         }
     }
 
@@ -114,11 +118,13 @@ class Ellipsoid
      * @param array $ellipsoidData
      *
      * @return Ellipsoid
+     *
+     * @throws InvalidArgumentException
      */
     public static function createFromArray($ellipsoidData)
     {
         if (empty($ellipsoidData['name']) || !isset($ellipsoidData['a']) || !isset($ellipsoidData['f'])) {
-            throw new \InvalidArgumentException('Invalid ellipsoid data');
+            throw new InvalidArgumentException('Invalid ellipsoid data');
         }
         return new self($ellipsoidData['name'], doubleval($ellipsoidData['a']), doubleval($ellipsoidData['f']));
     }

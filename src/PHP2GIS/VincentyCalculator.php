@@ -3,6 +3,7 @@
 namespace PHP2GIS;
 
 use PHP2GIS\Angle\PlaneAngle;
+use PHP2GIS\Exception\MismatchEllipsoidException;
 
 /**
  * Class VincentyCalculator
@@ -52,15 +53,14 @@ class VincentyCalculator
      * @param GeoPoint $point1
      * @param GeoPoint $point2
      * @return float // meters
+     *
+     * @throws MismatchEllipsoidException
      */
     public function inverseCalculation(GeoPoint $point1, GeoPoint $point2)
     {
         if ($point1->getEllipsoid() != $point2->getEllipsoid()) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Impossible to calculate the distance between two points on different ellipsoids [%s, %s]',
-                    $point1->getEllipsoid()->getName(), $point2->getEllipsoid()->getName()
-                )
+            throw new MismatchEllipsoidException(
+                    'Impossible to calculate the distance between two points on different ellipsoids'
             );
         }
 

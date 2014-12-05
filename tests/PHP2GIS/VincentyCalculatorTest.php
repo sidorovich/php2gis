@@ -110,7 +110,7 @@ class VincentyCalculatorTest extends \PHPUnit_Framework_TestCase
 
     public function testInverseCalculationOnDifferentEllipsoids()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->setExpectedException('PHP2GIS\Exception\MismatchEllipsoidException');
         $calculator = new VincentyCalculator();
         $point1 = new GeoPoint(51, 28, Ellipsoid::ELLIPSOID_WGS84);
         $point2 = new GeoPoint(28, 51, Ellipsoid::ELLIPSOID_PZ90);

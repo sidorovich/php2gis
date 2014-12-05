@@ -3,6 +3,7 @@
 namespace PHP2GIS\Angle\Formatter;
 
 use PHP2GIS\Angle\AbstractAngle;
+use PHP2GIS\Exception\InvalidArgumentException;
 
 /**
  * Class PlaneAngleFormatter
@@ -26,10 +27,14 @@ class PlaneAngleFormatter implements AngleFormatterInterface
 
     protected $template;
 
+    /**
+     * @param int $template
+     * @throws InvalidArgumentException
+     */
     public function __construct($template = self::TEMPLATE_DDMMSS_SPACES)
     {
         if (!isset(static::$TEMPLATES[$template])) {
-            throw new \InvalidArgumentException('Invalid format type');
+            throw new InvalidArgumentException('Invalid format type');
         }
 
         $this->template = $template;
