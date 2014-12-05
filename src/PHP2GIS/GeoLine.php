@@ -58,7 +58,7 @@ class GeoLine
      *
      * @throws MismatchEllipsoidException
      */
-    public function __constructor(GeoPoint $start, GeoPoint $end)
+    public function __construct(GeoPoint $start, GeoPoint $end)
     {
         if ($start->getEllipsoid() != $end->getEllipsoid()) {
             throw new MismatchEllipsoidException(self::EXCEPTION_MESSAGE_MISMATCH_ELLIPSOIDS);
