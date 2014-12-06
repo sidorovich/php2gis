@@ -2,6 +2,8 @@
 
 namespace PHP2GIS;
 
+use PHP2GIS\Angle\Latitude;
+use PHP2GIS\Angle\Longitude;
 use PHP2GIS\Angle\PlaneAngle;
 use PHP2GIS\Exception\MismatchEllipsoidException;
 
@@ -138,12 +140,90 @@ class VincentyCalculator
 
         $s = round($s, 6);
         if ($s > 0) {
-            $this->initialBearing = new PlaneAngle();
-            $this->initialBearing->setRadians($alpha1);
-            $this->finalBearing = new PlaneAngle();
-            $this->finalBearing->setRadians($alpha2);
+            $this->initialBearing = new PlaneAngle($alpha1, true);
+            $this->finalBearing = new PlaneAngle($alpha2, true);
         }
 
         return $s;
+    }
+
+    /**
+     * Vincenty direct calculation
+     *
+     * @param GeoPoint $point
+     * @param PlaneAngle|float $initialBearing // If float use degrees
+     * @param float $distance // Meters
+     * @return GeoPoint
+     */
+    public function directCalculation(GeoPoint $point, $initialBearing, $distance)
+    {
+        $this->initialBearing = null;
+        $this->finalBearing = null;
+
+        if ($initialBearing instanceof PlaneAngle) {
+            $alpha1 = $initialBearing->getRadians();
+        } else {
+            $alpha1 = deg2rad(doubleval($initialBearing));
+        }
+
+        $fi1     = $point->getLatitude()->getRadians();
+        $lambda1 = $point->getLongitude()->getRadians();
+        $s       = $distance;
+
+        $a = $point->getEllipsoid()->getA();
+        $b = $point->getEllipsoid()->getB();
+        $f = 1 / $point->getEllipsoid()->getF();
+
+        $sinAlpha1 = sin($alpha1);
+        $cosAlpha1 = cos($alpha1);
+
+        $tanU1 = (1 - $f) * tan($fi1);
+        $cosU1 = 1 / sqrt(1 + $tanU1 * $tanU1);
+        $sinU1 = $tanU1 * $cosU1;
+
+        $sigma1 = atan2($tanU1, $cosAlpha1);
+        $sinAlpha = $cosU1 * $sinAlpha1;
+
+        $cosSqAlpha = 1 - $sinAlpha * $sinAlpha;
+        $uSq = $cosSqAlpha * ($a * $a - $b * $b) / ($b * $b);
+
+        $A = 1 + $uSq / 16384 * (4096 + $uSq * (-768 + $uSq * (320 - 175 * $uSq)));
+        $B = $uSq / 1024 * (256 + $uSq * (-128 + $uSq * (74 - 47 * $uSq)));
+
+        $sigma = $s / ($b * $A);
+        $iteration = 0;
+
+        do {
+            $cos2SigmaM = cos(2 * $sigma1 + $sigma);
+            $sinSigma = sin($sigma);
+            $cosSigma = cos($sigma);
+
+            $deltaSigma = $B * $sinSigma * ($cos2SigmaM + $B / 4 * ($cosSigma * (-1 + 2 * $cos2SigmaM * $cos2SigmaM)
+                    - $B / 6 * $cos2SigmaM * (-3 + 4 * $sinSigma * $sinSigma) * (-3 + 4 * $cos2SigmaM * $cos2SigmaM)));
+
+            $prevSigma = $sigma;
+            $sigma = $s / ($b * $A) + $deltaSigma;
+        } while ((abs($sigma - $prevSigma) > $this->precision) && (++$iteration < $this->iterationsLimit));
+
+        $x   = $sinU1 * $sinSigma - $cosU1 * $cosSigma * $cosAlpha1;
+        $fi2 = atan2(
+            $sinU1 * $cosSigma + $cosU1 * $sinSigma * $cosAlpha1,
+            (1 - $f) * sqrt($sinAlpha * $sinAlpha + $x * $x)
+        );
+        $lambda = atan2($sinSigma * $sinAlpha1, $cosU1 * $cosSigma - $sinU1 * $sinSigma * $cosAlpha1);
+
+        $C = $f / 16 * $cosSqAlpha * (4 + $f * (4 - 3 * $cosSqAlpha));
+        $L = $lambda - (1 - $C) * $f * $sinAlpha * ($sigma + $C * $sinSigma
+                * ($cos2SigmaM + $C * $cosSigma * (-1 + 2 * $cos2SigmaM * $cos2SigmaM)));
+
+        $lambda2 = ($lambda1 + $L + 3 * M_PI) / M_PI;
+        $lambda2 = ($lambda2 - (int)$lambda2) * M_PI;
+
+        $alpha2 = atan2($sinAlpha, -$x);
+        $alpha2 = ($alpha2 >= 0) ? $alpha2 : ($alpha2 + 2 * M_PI);
+
+        $this->finalBearing = new PlaneAngle($alpha2, true);
+
+        return new GeoPoint(new Latitude($fi2, true), new Longitude($lambda2, true), $point->getEllipsoid());
     }
 }

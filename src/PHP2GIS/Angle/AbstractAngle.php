@@ -48,12 +48,17 @@ abstract class AbstractAngle
      * Construct angle
      *
      * @param float|string|bool $angle
+     * @param bool              $isRadiansValue
      */
-    public function __construct($angle = false)
+    public function __construct($angle = false, $isRadiansValue = false)
     {
         if (false !== $angle) {
             if (is_numeric($angle)) {
-                $this->setFloatValue(floatval($angle));
+                if ($isRadiansValue) {
+                    $this->setRadians(doubleval($angle));
+                } else {
+                    $this->setFloatValue(doubleval($angle));
+                }
             }
         }
     }
