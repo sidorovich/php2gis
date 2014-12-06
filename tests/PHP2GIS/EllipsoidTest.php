@@ -12,8 +12,6 @@ use PHP2GIS\Ellipsoid;
  */
 class EllipsoidTest extends \PHPUnit_Framework_TestCase
 {
-    const PRECISION = 0.0001;
-
     public function testEllipsoids()
     {
         $ellipsoids = [
@@ -29,10 +27,10 @@ class EllipsoidTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('PHP2GIS\Ellipsoid', $ellipsoid);
 
             $this->assertEquals($ellipsoidData[0], $ellipsoid->getName());
-            $this->assertEquals($ellipsoidData[1], $ellipsoid->getA(), '', self::PRECISION);
-            $this->assertEquals($ellipsoidData[2], $ellipsoid->getB(), '', self::PRECISION);
-            $this->assertEquals($ellipsoidData[3], $ellipsoid->getArithmeticMeanRadius(), '', self::PRECISION);
-            $this->assertEquals($ellipsoidData[4], $ellipsoid->getF(), '', self::PRECISION);
+            $this->assertEquals($ellipsoidData[1], $ellipsoid->getA(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($ellipsoidData[2], $ellipsoid->getB(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($ellipsoidData[3], $ellipsoid->getArithmeticMeanRadius(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($ellipsoidData[4], $ellipsoid->getF(), '', ASSERT_FLOAT_PRECISION);
         }
      }
 

@@ -4,7 +4,7 @@ use PHP2GIS\GeoPoint;
 use PHP2GIS\Ellipsoid;
 use PHP2GIS\VincentyCalculator;
 
-    /**
+/**
  * Class DistanceVincentyCalculatorTest
  *
  * @package PHP2GIS
@@ -14,8 +14,6 @@ use PHP2GIS\VincentyCalculator;
  */
 class VincentyCalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    const PRECISION = 1e-3;
-
     public function testInverseCalculationWGS84()
     {
         $testCases = [
@@ -102,9 +100,9 @@ class VincentyCalculatorTest extends \PHPUnit_Framework_TestCase
             $finalBearing   = is_null($calculator->getFinalBearing())
                 ? null : $calculator->getFinalBearing()->getFloatValue();
 
-            $this->assertEquals($test[4], $distance, '', self::PRECISION);
-            $this->assertEquals($test[5], $initialBearing, '', self::PRECISION);
-            $this->assertEquals($test[6], $finalBearing, '', self::PRECISION);
+            $this->assertEquals($test[4], $distance, '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($test[5], $initialBearing, '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($test[6], $finalBearing, '', ASSERT_FLOAT_PRECISION);
         }
     }
 
