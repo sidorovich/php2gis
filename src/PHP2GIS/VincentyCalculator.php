@@ -150,12 +150,13 @@ class VincentyCalculator
     /**
      * Vincenty direct calculation
      *
-     * @param GeoPoint $point
-     * @param PlaneAngle|float $initialBearing // If float use degrees
-     * @param float $distance // Meters
+     * @param GeoPoint         $point
+     * @param PlaneAngle|float $initialBearing // If float please use degrees
+     * @param float            $distance // Meters
+     * @param bool             $bearingInRadians // set TRUE if bearing in radians
      * @return GeoPoint
      */
-    public function directCalculation(GeoPoint $point, $initialBearing, $distance)
+    public function directCalculation(GeoPoint $point, $initialBearing, $distance, $bearingInRadians = false)
     {
         $this->initialBearing = null;
         $this->finalBearing = null;
@@ -163,7 +164,7 @@ class VincentyCalculator
         if ($initialBearing instanceof PlaneAngle) {
             $alpha1 = $initialBearing->getRadians();
         } else {
-            $alpha1 = deg2rad(doubleval($initialBearing));
+            $alpha1 = $bearingInRadians ? $initialBearing : deg2rad(doubleval($initialBearing));
         }
 
         $fi1     = $point->getLatitude()->getRadians();
@@ -216,8 +217,8 @@ class VincentyCalculator
         $L = $lambda - (1 - $C) * $f * $sinAlpha * ($sigma + $C * $sinSigma
                 * ($cos2SigmaM + $C * $cosSigma * (-1 + 2 * $cos2SigmaM * $cos2SigmaM)));
 
-        $lambda2 = ($lambda1 + $L + 3 * M_PI) / M_PI;
-        $lambda2 = ($lambda2 - (int)$lambda2) * M_PI;
+        $lambda2 = ($lambda1 + $L + 3 * M_PI);
+        $lambda2 = ($lambda2 - ((int)($lambda2 / (2 * M_PI))) * 2 * M_PI) - M_PI; // thanks to my wife for normalization
 
         $alpha2 = atan2($sinAlpha, -$x);
         $alpha2 = ($alpha2 >= 0) ? $alpha2 : ($alpha2 + 2 * M_PI);

@@ -105,6 +105,15 @@ class AbstractAngleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(44, $angle->getMinutes());
         $this->assertEquals(7.906629736547757, $angle->getSeconds());
     }
+
+    public function testConstructFromRadians()
+    {
+        $angle = new Longitude(M_PI, true);
+
+        $this->assertInstanceOf('PHP2GIS\Angle\AbstractAngle', $angle);
+        $this->assertEquals(180, $angle->getFloatValue());
+        $this->assertEquals(M_PI, $angle->getRadians());
+    }
 }
 
 class TestAngle extends Latitude

@@ -85,6 +85,54 @@ class VincentyCalculatorTest extends \PHPUnit_Framework_TestCase
         $this->processInverseCalculationTests($testCases, Ellipsoid::ELLIPSOID_SK42);
     }
 
+    public function testInverseCalculationOnDifferentEllipsoids()
+    {
+        $this->setExpectedException('PHP2GIS\Exception\MismatchEllipsoidException');
+        $calculator = new VincentyCalculator();
+        $point1 = new GeoPoint(51, 28, Ellipsoid::ELLIPSOID_WGS84);
+        $point2 = new GeoPoint(28, 51, Ellipsoid::ELLIPSOID_PZ90);
+        $calculator->inverseCalculation($point1, $point2);
+    }
+
+    public function testDirectInverseCalculationWGS84()
+    {
+        $testCases = [
+            // Random tests
+            //     Latitude,      Longitude,Distance (meters),Initial bearing,   Result  Lat,    Result Long, Final bearing
+            [ 28.1272222222, -15.4313888889,  4864342.3823363, 259.3086909458, 13.0961111111, -59.6083333333, 242.90397076,],
+            [-25.3752777778,  78.6936111111, 17721239.7636161,   7.0159639764, 45.7494444444,-104.8816666667, 170.91022064,],
+            [ 65.0479465514, 144.0172799137,  2040319.2487804, 118.0136305457, 52.9881037103, 171.4189924582, 141.75226913,],
+            [ 84.6976571692, -15.4751404540, 19601718.199314 ,  73.1517156740,-82.7822487703, 135.9061243285, 135.25389944,],
+            [-51.7472103339, -84.0584828630, 14663016.185919 , 304.5562190304, 51.9636896006, 178.2328634619, 304.15400822,],
+            [ 15.2207062325, 136.1129137111,  6934395.6425482, 150.1466497919,-38.5138967098, 170.3076491627, 142.17833078,],
+            [-56.9770517140, 174.2056169893,  8902690.5910534, 288.9162989934,  1.8030217731, 105.5103660916, 328.86781730,],
+            [ 53.1511030081,-126.7122396579,  2626968.7377682,  91.8739324118, 46.5115302773, -91.2323659139, 119.39341838,],
+            [-52.2799908380, 158.6081633617,  3537676.7817084, 231.4020664019,-60.8865541656, 101.0412136872, 280.79562358,],
+            [ -6.9204491642,   1.6490195047,  2999279.0710997,  25.8068730430, 17.4657046222,  13.5771356323,  26.93247213,],
+
+            // Long tests
+
+            // Short tests
+        ];
+
+        $this->processDirectCalculationTests($testCases, Ellipsoid::ELLIPSOID_WGS84);
+    }
+
+    protected function processDirectCalculationTests($testCases, $ellipsoid)
+    {
+        $calculator = new VincentyCalculator();
+        foreach ($testCases as $test) {
+            $point = new GeoPoint($test[0], $test[1], $ellipsoid);
+
+            $end = $calculator->directCalculation($point, new \PHP2GIS\Angle\PlaneAngle($test[3]), $test[2]);
+            $this->assertInstanceOf('PHP2GIS\GeoPoint', $end);
+            $this->assertEquals($ellipsoid, $end->getEllipsoid()->getName());
+            $this->assertEquals($test[4], $end->getLatitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($test[5], $end->getLongitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($test[6], $calculator->getFinalBearing()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+        }
+    }
+
     protected function processInverseCalculationTests($testCases, $ellipsoid)
     {
         $calculator = new VincentyCalculator();
@@ -104,14 +152,5 @@ class VincentyCalculatorTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($test[5], $initialBearing, '', ASSERT_FLOAT_PRECISION);
             $this->assertEquals($test[6], $finalBearing, '', ASSERT_FLOAT_PRECISION);
         }
-    }
-
-    public function testInverseCalculationOnDifferentEllipsoids()
-    {
-        $this->setExpectedException('PHP2GIS\Exception\MismatchEllipsoidException');
-        $calculator = new VincentyCalculator();
-        $point1 = new GeoPoint(51, 28, Ellipsoid::ELLIPSOID_WGS84);
-        $point2 = new GeoPoint(28, 51, Ellipsoid::ELLIPSOID_PZ90);
-        $calculator->inverseCalculation($point1, $point2);
     }
 }
