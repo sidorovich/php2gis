@@ -105,6 +105,16 @@ class GeoLineTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($line->getFinalBearing());
     }
 
+    public function testGeoJSON()
+    {
+        $line = new GeoLine(new GeoPoint(12.345678, -123.456789), new GeoPoint(-87.654321, 111.111111));
+
+        $this->assertEquals(
+            '{"type":"LineString","coordinates":[[12.345678,-123.456789],[-87.654321,111.111111]]}',
+            json_encode($line->geoJSON())
+        );
+    }
+
     protected function getGeoLine()
     {
         return new StubGeoLine(new GeoPoint(53.8913888889, 29.1697222222), new GeoPoint(54.035, 29.3013888889));

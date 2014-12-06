@@ -110,4 +110,14 @@ class GeoPointTest extends \PHPUnit_Framework_TestCase
             }
         }
     }
+
+    public function testGeoJSON()
+    {
+        $point1 = new GeoPoint(12.345678, -123.456789);
+
+        $this->assertEquals(
+            '{"type":"Point","coordinates":[12.345678,-123.456789]}',
+            json_encode($point1->geoJSON())
+        );
+    }
 }

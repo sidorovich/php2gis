@@ -177,6 +177,22 @@ class GeoLine
     }
 
     /**
+     * Return associative array for encode to GeoJSON format
+     *
+     * @return array
+     */
+    public function geoJSON()
+    {
+        return [
+            'type'        => 'LineString',
+            'coordinates' => [
+                [$this->start->getLatitude()->getFloatValue(), $this->start->getLongitude()->getFloatValue()],
+                [$this->end->getLatitude()->getFloatValue(), $this->end->getLongitude()->getFloatValue()],
+            ],
+        ];
+    }
+
+    /**
      * Calculate distance
      *
      * @return $this

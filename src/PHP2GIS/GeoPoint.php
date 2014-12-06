@@ -139,4 +139,17 @@ class GeoPoint
     {
         return $this->ellipsoid;
     }
+
+    /**
+     * Return associative array for encode to GeoJSON format
+     *
+     * @return array
+     */
+    public function geoJSON()
+    {
+        return [
+            'type'        => 'Point',
+            'coordinates' => [$this->latitude->getFloatValue(), $this->longitude->getFloatValue()],
+        ];
+    }
 }
