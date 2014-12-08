@@ -5,7 +5,6 @@ use PHP2GIS\Ellipsoid;
 /**
  * Class EllipsoidTest
  *
- * @package PHP2GIS
  * @since   2014-12-03
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT

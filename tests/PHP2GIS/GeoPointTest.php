@@ -8,7 +8,6 @@ use PHP2GIS\GeoPoint;
 /**
  * Class GeoPointTest
  *
- * @package PHP2GIS
  * @since   2014-12-02
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT

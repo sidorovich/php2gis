@@ -7,7 +7,6 @@ use PHP2GIS\VincentyCalculator;
 /**
  * Class DistanceVincentyCalculatorTest
  *
- * @package PHP2GIS
  * @since   2014-12-03
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT

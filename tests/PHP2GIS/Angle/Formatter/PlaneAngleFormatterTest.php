@@ -6,7 +6,6 @@ use PHP2GIS\Angle\PlaneAngle;
 /**
  * Class PlaneAngleFormatterTest
  *
- * @package PHP2GIS
  * @since   2014-12-04
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT

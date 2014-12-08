@@ -7,7 +7,6 @@ use PHP2GIS\GeoPoint;
 /**
  * Class GeoLineTest
  *
- * @package PHP2GIS
  * @since   2014-12-05
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT

@@ -5,7 +5,6 @@ use PHP2GIS\Angle\Longitude;
 /**
  * Class LongitudeTest
  *
- * @package PHP2GIS\Angle
  * @since   2014-12-02
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT
