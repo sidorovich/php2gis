@@ -12,6 +12,7 @@ Supported ellipsoids:
 - [SK-42](https://en.wikipedia.org/wiki/SK-42_reference_system)
 
 If you need more simple library without latitude and longitude objects - try [mjaschen/phpgeo](https://github.com/mjaschen/phpgeo)
+
 If you need more ellipsoid datums, and more conversions - try [MarkBaker/PHPGeodetic](https://github.com/MarkBaker/PHPGeodetic)
     
 ## Installation
