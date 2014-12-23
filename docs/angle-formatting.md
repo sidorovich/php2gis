@@ -40,18 +40,24 @@ use PHP2GIS\Angle\Latitude;
 use PHP2GIS\Angle\Formatter\LatitudeFormatter;
 
 $lat = new Latitude(-21.937607457832);
-$formatter = new LatitudeFormatter(LatitudeFormatter::TEMPLATE_DDMMSS_SIGNS, LatitudeFormatter::SYMBOL_LEADING);
+$formatter = new LatitudeFormatter(
+    LatitudeFormatter::TEMPLATE_DDMMSS_SIGNS, LatitudeFormatter::SYMBOL_LEADING
+);
 echo $lat->format($formatter); // S21°56′15″
 
 $lat = new Latitude(70.758686634134);
-$formatter = new LatitudeFormatter(LatitudeFormatter::TEMPLATE_DDDMMSSs_DOTS, LatitudeFormatter::SYMBOL_LEADING); 
+$formatter = new LatitudeFormatter(
+    LatitudeFormatter::TEMPLATE_DDDMMSSs_DOTS, LatitudeFormatter::SYMBOL_LEADING
+); 
 echo $lat->format($formatter); // N070.45.31.272
 
 $lat = new Latitude(14.399535201676);
-$formatter = new LatitudeFormatter(LatitudeFormatter::TEMPLATE_DDMMSS_SPACES, LatitudeFormatter::SYMBOL_ENDING);
+$formatter = new LatitudeFormatter(
+    LatitudeFormatter::TEMPLATE_DDMMSS_SPACES, LatitudeFormatter::SYMBOL_ENDING
+);
 echo $lat->format($formatter); // 14 23 58N
 ```
 
 ### Longitude formatting
 
-Longitude formatter in general is the same like latitude formatter, but degrees part will have 3 symbols always (adding leading zeros), and using `E` and `W` for positive and negative values.
+Longitude formatter in general is the same like latitude formatter, but degrees part will have 3 symbols always (adding leading zeros), and using `E` and `W` symbols for positive and negative values.
