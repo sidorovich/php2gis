@@ -12,7 +12,7 @@ use PHP2GIS\Exception\MismatchEllipsoidException;
  *
  * @see http://www.movable-type.co.uk/scripts/latlong-vincenty.html
  *
- * @package PHP2GIS\Distance
+ * @package PHP2GIS
  * @since   2014-12-03
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT
@@ -151,7 +151,7 @@ class VincentyCalculator
      * Vincenty direct calculation
      *
      * @param GeoPoint         $point
-     * @param PlaneAngle|float $initialBearing // If float please use degrees
+     * @param PlaneAngle|float $initialBearing // If float please use degrees or set $bearingInRadians true if radians
      * @param float            $distance // Meters
      * @param bool             $bearingInRadians // set TRUE if bearing in radians
      * @return GeoPoint
