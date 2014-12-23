@@ -75,6 +75,10 @@ class AbstractAngleTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($angle1->isEqual($angle2));
         $this->assertFalse($angle2->isEqual($angle1));
 
+        $angle2 = new Longitude(54.12345678);
+        $this->assertFalse($angle1->isEqual($angle2));
+        $this->assertFalse($angle2->isEqual($angle1));
+
         $angle1 = new TestAngle(54.12345678);
         $angle2 = new TestAngle(54.123456789);
         $this->assertTrue($angle1->isEqual($angle2));

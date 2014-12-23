@@ -161,7 +161,8 @@ abstract class AbstractAngle
      */
     public function isEqual(AbstractAngle $angle)
     {
-        return (abs($this->getFloatValue() - $angle->getFloatValue()) < static::EPS);
+        return (get_class($this) == get_class($angle))
+            && (abs($this->getFloatValue() - $angle->getFloatValue()) < static::EPS);
     }
 
     /**
