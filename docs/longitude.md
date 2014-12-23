@@ -9,7 +9,7 @@ Valid values for longitude [-180..180] degrees.
 
 If you try set invalid value you got `PHP2GIS\Exception\InvalidArgumentException`
 
-Positive value using for east longitude (E), and negative value using for west longitude (W).
+Positive value using for east longitude `E`, and negative value using for west longitude `W`.
 
 And you must remember, that you can not compare `Latitude`, `Longitude` and `PlaneAngle`
 

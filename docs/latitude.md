@@ -8,7 +8,7 @@ Valid values for latitude [-90..90] degrees.
 
 If you try set invalid value you got `PHP2GIS\Exception\InvalidArgumentException`
 
-Positive value using for north latitude (N), and negative value using for west latitude (E).
+Positive value using for north latitude `N`, and negative value using for west latitude `E`.
 
 And you must remember, that you can not compare `Latitude`, `Longitude` and `PlaneAngle`
 

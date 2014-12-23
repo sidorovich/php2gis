@@ -3,13 +3,16 @@
 PHP2GIS
 =======
 
-Simple library for working with geodetic objects on Earth ellipsoid models
+Library for working with geodetic objects on Earth ellipsoid models. I write it for own using in aviation and simulator needs.
 
 Supported ellipsoids:
 - [WGS-84](https://en.wikipedia.org/wiki/World_Geodetic_System)
 - [GRS-80](https://en.wikipedia.org/wiki/World_Geodetic_System)
 - [PZ-90](https://ru.wikipedia.org/wiki/%D0%9F%D0%97-90)
 - [SK-42](https://en.wikipedia.org/wiki/SK-42_reference_system)
+
+If you need more simple library without latitude and longitude objects - try [mjaschen/phpgeo](https://github.com/mjaschen/phpgeo)
+If you need more ellipsoid datums, and more conversions - try [MarkBaker/PHPGeodetic](https://github.com/MarkBaker/PHPGeodetic)
     
 ## Installation
     
@@ -24,6 +27,7 @@ composer require sidorovich/php2gis
 - [Plain angle](docs/plain-angle.md)
 - [Latitude](docs/latitude.md)
 - [Longitude](docs/longitude.md)
+- [Angle formatting](docs/angle-formatting.md)
 
 ## License
 
