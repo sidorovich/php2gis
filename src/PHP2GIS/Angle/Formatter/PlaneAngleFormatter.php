@@ -19,11 +19,11 @@ class PlaneAngleFormatter implements AngleFormatterInterface
     const TEMPLATE_DDMMSS_SIGNS  = 2;
     const TEMPLATE_DDDMMSSs_DOTS = 3;
 
-    protected static $TEMPLATES = [
+    protected static $TEMPLATES = array(
         self::TEMPLATE_DDMMSS_SPACES => '%d %02d %02d',
         self::TEMPLATE_DDMMSS_SIGNS  => '%d°%02d′%02d″',
         self::TEMPLATE_DDDMMSSs_DOTS => '%03d.%02d.%s',
-    ];
+    );
 
     protected $template;
 

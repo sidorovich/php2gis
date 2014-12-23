@@ -147,9 +147,9 @@ class GeoPoint
      */
     public function geoJSON()
     {
-        return [
+        return array(
             'type'        => 'Point',
-            'coordinates' => [$this->latitude->getFloatValue(), $this->longitude->getFloatValue()],
-        ];
+            'coordinates' => array($this->latitude->getFloatValue(), $this->longitude->getFloatValue()),
+        );
     }
 }

@@ -183,13 +183,13 @@ class GeoLine
      */
     public function geoJSON()
     {
-        return [
+        return array(
             'type'        => 'LineString',
-            'coordinates' => [
-                [$this->start->getLatitude()->getFloatValue(), $this->start->getLongitude()->getFloatValue()],
-                [$this->end->getLatitude()->getFloatValue(), $this->end->getLongitude()->getFloatValue()],
-            ],
-        ];
+            'coordinates' => array(
+                array($this->start->getLatitude()->getFloatValue(), $this->start->getLongitude()->getFloatValue()),
+                array($this->end->getLatitude()->getFloatValue(), $this->end->getLongitude()->getFloatValue()),
+            ),
+        );
     }
 
     /**

@@ -34,20 +34,21 @@ class DimensionsTest extends \PHPUnit_Framework_TestCase
 
     public function testExpandGeoPoints()
     {
-        $testCases = [
-            [
-                'result' => [54.123456, 28.765432, 54.123456, 28.765432],
-                'points' => [
-                    [54.123456, 28.765432],
-                ],
-            ],
-            [
-                'result' => [54.123456, 28.765432, 56.54321, 30.123],
-                'points' => [
-                    [54.123456, 28.765432],[56.54321, 30.123],
-                ],
-            ],
-        ];
+        $testCases = array(
+            array(
+                'result' => array(54.123456, 28.765432, 54.123456, 28.765432),
+                'points' => array(
+                    array(54.123456, 28.765432),
+                ),
+            ),
+            array(
+                'result' => array(54.123456, 28.765432, 56.54321, 30.123),
+                'points' => array(
+                    array(54.123456, 28.765432), array(56.54321, 30.123),
+                ),
+            ),
+            // @todo: add more test cases here
+        );
 
         foreach ($testCases as $test) {
             $dimensions = new Dimensions();

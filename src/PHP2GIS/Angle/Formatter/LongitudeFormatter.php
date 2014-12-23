@@ -12,11 +12,11 @@ namespace PHP2GIS\Angle\Formatter;
  */
 class LongitudeFormatter extends LatitudeFormatter
 {
-    protected static $SYMBOLS = ['E', 'W'];
+    protected static $SYMBOLS = array('E', 'W');
 
-    protected static $TEMPLATES = [
+    protected static $TEMPLATES = array(
         self::TEMPLATE_DDMMSS_SPACES => '%03d %02d %02d',
         self::TEMPLATE_DDMMSS_SIGNS  => '%03d°%02d′%02d″',
         self::TEMPLATE_DDDMMSSs_DOTS => '%03d.%02d.%s',
-    ];
+    );
 }

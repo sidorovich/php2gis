@@ -17,13 +17,13 @@ class LatitudeFormatter extends PlaneAngleFormatter
     const SYMBOL_LEADING = 1;
     const SYMBOL_ENDING  = 2;
 
-    protected static $SYMBOLS = ['N', 'S'];
+    protected static $SYMBOLS = array('N', 'S');
 
-    protected static $TEMPLATES = [
+    protected static $TEMPLATES = array(
         self::TEMPLATE_DDMMSS_SPACES => '%02d %02d %02d',
         self::TEMPLATE_DDMMSS_SIGNS  => '%02d°%02d′%02d″',
         self::TEMPLATE_DDDMMSSs_DOTS => '%03d.%02d.%s',
-    ];
+    );
 
     protected $symbolPosition;
 

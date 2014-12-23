@@ -46,45 +46,45 @@ class Ellipsoid
      *
      * @var array
      */
-    protected static $ELLIPSOIDS = [
+    protected static $ELLIPSOIDS = array(
 
         /**
          * @see  https://en.wikipedia.org/wiki/World_Geodetic_System
          */
 
-        self::ELLIPSOID_WGS84 => [
+        self::ELLIPSOID_WGS84 => array(
             'name' => self::ELLIPSOID_WGS84,
             'a'    => 6378137.0,
             'f'    => 298.257223563,
-        ],
+        ),
 
-        self::ELLIPSOID_GRS80 => [
+        self::ELLIPSOID_GRS80 => array(
             'name' => self::ELLIPSOID_GRS80,
             'a'    => 6378137.0,
             'f'    => 298.257222100882711,
-        ],
+        ),
 
         /**
          * @see  https://ru.wikipedia.org/wiki/%D0%9F%D0%97-90
          * using for GLONASS https://en.wikipedia.org/wiki/GLONASS
          */
 
-        self::ELLIPSOID_PZ90 => [
+        self::ELLIPSOID_PZ90 => array(
             'name' => self::ELLIPSOID_PZ90,
             'a'    => 6378136.0,
             'f'    => 298.257839303,
-        ],
+        ),
 
         /**
          * @see  https://en.wikipedia.org/wiki/SK-42_reference_system
          */
 
-        self::ELLIPSOID_SK42 => [
+        self::ELLIPSOID_SK42 => array(
             'name' => self::ELLIPSOID_SK42,
             'a'    => 6378245.0,
             'f'    => 298.3,
-        ],
-    ];
+        ),
+    );
 
     /**
      * @param string $name

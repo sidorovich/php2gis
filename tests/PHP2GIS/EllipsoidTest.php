@@ -13,13 +13,13 @@ class EllipsoidTest extends \PHPUnit_Framework_TestCase
 {
     public function testEllipsoids()
     {
-        $ellipsoids = [
-          // name   , Semi-major axis (A), Semi-minor axis (B), Arithmetic mean R (2A+B)/3, Inverse Flattening (1/f),
-            ['WGS84', 6378137.0          , 6356752.3142       , 6371008.7714              , 298.257223563          ],
-            ['GRS80', 6378137.0          , 6356752.31414      , 6371008.77138             , 298.257222100882711    ],
-            ['PZ-90', 6378136.0          , 6356751.36175      , 6371007.78725             , 298.257839303          ],
-            ['SK-42', 6378245.0          , 6356863.01877      , 6371117.67292             , 298.3                  ],
-        ];
+        $ellipsoids = array(
+          //      name   , Semi-major axis (A), Semi-minor axis (B), Arithmetic mean R (2A+B)/3, Inverse Flattening (1/f),
+            array('WGS84', 6378137.0          , 6356752.3142       , 6371008.7714              , 298.257223563          ),
+            array('GRS80', 6378137.0          , 6356752.31414      , 6371008.77138             , 298.257222100882711    ),
+            array('PZ-90', 6378136.0          , 6356751.36175      , 6371007.78725             , 298.257839303          ),
+            array('SK-42', 6378245.0          , 6356863.01877      , 6371117.67292             , 298.3                  ),
+        );
 
         foreach ($ellipsoids as $ellipsoidData) {
             $ellipsoid = Ellipsoid::create($ellipsoidData[0]);
@@ -35,16 +35,17 @@ class EllipsoidTest extends \PHPUnit_Framework_TestCase
 
     public function testEqual()
     {
-        $ellipsoids = [
-            [true , 'A', 6378137, 298, 'A', 6378137, 298],
-            [false, 'A', 6378137, 298, 'B', 6378137, 298],
-            [false, 'A', 6378137, 298, 'A', 6378136, 298],
-            [false, 'A', 6378137, 298, 'A', 6378137, 297],
-        ];
+        $ellipsoids = array(
+            //   result, name1,     A1 ,  F1, name2,     A2 ,  F2
+            array(true ,   'A', 6378137, 298,   'A', 6378137, 298),
+            array(false,   'A', 6378137, 298,   'B', 6378137, 298),
+            array(false,   'A', 6378137, 298,   'A', 6378136, 298),
+            array(false,   'A', 6378137, 298,   'A', 6378137, 297),
+        );
 
         foreach ($ellipsoids as $var) {
-            $ellipsoid1 = Ellipsoid::createFromArray(['name' => $var[1], 'a' => $var[2], 'f' => $var[3]]);
-            $ellipsoid2 = Ellipsoid::createFromArray(['name' => $var[4], 'a' => $var[5], 'f' => $var[6]]);
+            $ellipsoid1 = Ellipsoid::createFromArray(array('name' => $var[1], 'a' => $var[2], 'f' => $var[3]));
+            $ellipsoid2 = Ellipsoid::createFromArray(array('name' => $var[4], 'a' => $var[5], 'f' => $var[6]));
 
             $this->assertInstanceOf('PHP2GIS\Ellipsoid', $ellipsoid1);
             $this->assertInstanceOf('PHP2GIS\Ellipsoid', $ellipsoid2);
@@ -66,18 +67,18 @@ class EllipsoidTest extends \PHPUnit_Framework_TestCase
     public function testEmptyEllipsoidName()
     {
         $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
-        $ellipsoid = Ellipsoid::createFromArray(['name' => '', 'a' => 6378137, 'f' => 298.257223563]);
+        $ellipsoid = Ellipsoid::createFromArray(array('name' => '', 'a' => 6378137, 'f' => 298.257223563));
     }
 
     public function testInvalidEllipsoidA()
     {
         $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
-        $ellipsoid = Ellipsoid::createFromArray(['name' => 'TEST', 'f' => 298.257223563]);
+        $ellipsoid = Ellipsoid::createFromArray(array('name' => 'TEST', 'f' => 298.257223563));
     }
 
     public function testInvalidEllipsoidF()
     {
         $this->setExpectedException('PHP2GIS\Exception\InvalidArgumentException');
-        $ellipsoid = Ellipsoid::createFromArray(['name' => 'TEST', 'a' => 6378137]);
+        $ellipsoid = Ellipsoid::createFromArray(array('name' => 'TEST', 'a' => 6378137));
     }
 }
