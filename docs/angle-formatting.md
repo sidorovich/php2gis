@@ -25,7 +25,7 @@ echo $angle->format($formatter); // 085.38.10.261
 // where is 085 - integer degrees, 38 - integer minutes, 10.261 - seconds
 ```
 
-### Latitude formatting
+#### Latitude formatting
 
 For latitude and longitude used delimiter template from `PlaneAngle` and added flag about sign-symbol position (leading or ending)
 
@@ -58,6 +58,6 @@ $formatter = new LatitudeFormatter(
 echo $lat->format($formatter); // 14 23 58N
 ```
 
-### Longitude formatting
+#### Longitude formatting
 
 Longitude formatter in general is the same like latitude formatter, but degrees part will have 3 symbols always (adding leading zeros), and using `E` and `W` symbols for positive and negative values.

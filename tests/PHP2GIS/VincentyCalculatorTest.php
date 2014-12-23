@@ -127,12 +127,29 @@ class VincentyCalculatorTest extends \PHPUnit_Framework_TestCase
         foreach ($testCases as $test) {
             $point = new GeoPoint($test[0], $test[1], $ellipsoid);
 
-            $end = $calculator->directCalculation($point, new \PHP2GIS\Angle\PlaneAngle($test[3]), $test[2]);
-            $this->assertInstanceOf('PHP2GIS\GeoPoint', $end);
-            $this->assertEquals($ellipsoid, $end->getEllipsoid()->getName());
-            $this->assertEquals($test[4], $end->getLatitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
-            $this->assertEquals($test[5], $end->getLongitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+            $end1 = $calculator->directCalculation($point, new \PHP2GIS\Angle\PlaneAngle($test[3]), $test[2]);
+            $this->assertInstanceOf('PHP2GIS\GeoPoint', $end1);
+            $this->assertEquals($ellipsoid, $end1->getEllipsoid()->getName());
+            $this->assertEquals($test[4], $end1->getLatitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($test[5], $end1->getLongitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
             $this->assertEquals($test[6], $calculator->getFinalBearing()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+
+            $end2 = $calculator->directCalculation($point, $test[3], $test[2]);
+            $this->assertInstanceOf('PHP2GIS\GeoPoint', $end2);
+            $this->assertEquals($ellipsoid, $end2->getEllipsoid()->getName());
+            $this->assertEquals($test[4], $end2->getLatitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($test[5], $end2->getLongitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($test[6], $calculator->getFinalBearing()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+
+            $end3 = $calculator->directCalculation($point, deg2rad($test[3]), $test[2], true);
+            $this->assertInstanceOf('PHP2GIS\GeoPoint', $end3);
+            $this->assertEquals($ellipsoid, $end3->getEllipsoid()->getName());
+            $this->assertEquals($test[4], $end3->getLatitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($test[5], $end3->getLongitude()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+            $this->assertEquals($test[6], $calculator->getFinalBearing()->getFloatValue(), '', ASSERT_FLOAT_PRECISION);
+
+            $this->assertTrue($end1->isEqual($end2));
+            $this->assertTrue($end2->isEqual($end3));
         }
     }
 

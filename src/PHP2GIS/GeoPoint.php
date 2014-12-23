@@ -13,7 +13,7 @@ use PHP2GIS\Angle\Longitude;
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT
  */
-class GeoPoint
+class GeoPoint implements GeoJsonConvertableInterface
 {
     /**
      * @var Latitude
@@ -119,7 +119,7 @@ class GeoPoint
      * @param string|Ellipsoid $ellipsoid
      * @return $this
      */
-    public function setEllipsoid($ellipsoid)
+    protected function setEllipsoid($ellipsoid)
     {
         if ($ellipsoid instanceof Ellipsoid) {
             $this->ellipsoid = $ellipsoid;
@@ -145,7 +145,7 @@ class GeoPoint
      *
      * @return array
      */
-    public function geoJSON()
+    public function toGeoJson()
     {
         return array(
             'type'        => 'Point',

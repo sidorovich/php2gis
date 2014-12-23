@@ -29,6 +29,7 @@ composer require sidorovich/php2gis
 - [Latitude](docs/latitude.md)
 - [Longitude](docs/longitude.md)
 - [Angle formatting](docs/angle-formatting.md)
+- [GeoPoint](docs/geopoint.md)
 
 ## License
 

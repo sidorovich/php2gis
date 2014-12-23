@@ -13,7 +13,7 @@ use PHP2GIS\Exception\MismatchEllipsoidException;
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT
  */
-class GeoLine
+class GeoLine implements GeoJsonConvertableInterface
 {
 
     const EXCEPTION_MESSAGE_MISMATCH_ELLIPSOIDS = 'Impossible to use different ellipsoids for points of one line';
@@ -181,7 +181,7 @@ class GeoLine
      *
      * @return array
      */
-    public function geoJSON()
+    public function toGeoJson()
     {
         return array(
             'type'        => 'LineString',

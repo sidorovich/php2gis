@@ -110,7 +110,7 @@ class GeoLineTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '{"type":"LineString","coordinates":[[12.345678,-123.456789],[-87.654321,111.111111]]}',
-            json_encode($line->geoJSON())
+            json_encode($line->toGeoJson())
         );
     }
 

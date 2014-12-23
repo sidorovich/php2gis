@@ -57,10 +57,10 @@ class GeoPointTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(Ellipsoid::create(), $point->getEllipsoid());
 
-        $this->assertInstanceOf('PHP2GIS\GeoPoint', $point->setEllipsoid(Ellipsoid::ELLIPSOID_PZ90));
+        $point = new GeoPoint(54, new Longitude(28), Ellipsoid::ELLIPSOID_PZ90);
         $this->assertEquals(Ellipsoid::create(Ellipsoid::ELLIPSOID_PZ90), $point->getEllipsoid());
 
-        $this->assertInstanceOf('PHP2GIS\GeoPoint', $point->setEllipsoid(Ellipsoid::create(Ellipsoid::ELLIPSOID_SK42)));
+        $point = new GeoPoint(54, new Longitude(28), Ellipsoid::create(Ellipsoid::ELLIPSOID_SK42));
         $this->assertEquals(Ellipsoid::create(Ellipsoid::ELLIPSOID_SK42), $point->getEllipsoid());
     }
 
@@ -93,12 +93,8 @@ class GeoPointTest extends \PHPUnit_Framework_TestCase
         );
 
         foreach ($tests as $test) {
-            $point1->getLatitude()->setFloatValue($test[1]);
-            $point1->getLongitude()->setFloatValue($test[2]);
-            $point1->setEllipsoid($test[5]);
-            $point2->getLatitude()->setFloatValue($test[3]);
-            $point2->getLongitude()->setFloatValue($test[4]);
-            $point2->setEllipsoid($test[6]);
+            $point1 = new GeoPoint($test[1], $test[2], $test[5]);
+            $point2 = new GeoPoint($test[3], $test[4], $test[6]);
 
             if ($test[0]) {
                 $this->assertTrue($point1->isEqual($point2));
@@ -116,7 +112,7 @@ class GeoPointTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '{"type":"Point","coordinates":[12.345678,-123.456789]}',
-            json_encode($point1->geoJSON())
+            json_encode($point1->toGeoJson())
         );
     }
 }
