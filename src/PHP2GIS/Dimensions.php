@@ -14,7 +14,7 @@ use PHP2GIS\Exception\MismatchEllipsoidException;
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT
  */
-class Dimensions
+class Dimensions implements GeoJsonConvertibleInterface
 {
     /**
      * @var Ellipsoid
@@ -215,5 +215,21 @@ class Dimensions
         }
 
         return $this;
+    }
+
+    /**
+     * Return associative array for encode to GeoJSON format
+     *
+     * @return array
+     */
+    public function toGeoJson()
+    {
+        return array(
+            'type'        => 'MultiPoint',
+            'coordinates' => array(
+                array($this->southBorder->getFloatValue(), $this->westBorder->getFloatValue()),
+                array($this->northBorder->getFloatValue(), $this->eastBorder->getFloatValue()),
+            ),
+        );
     }
 }

@@ -108,4 +108,21 @@ class DimensionsTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($test['result'][3], $dimensions->getEastBorder()->getFloatValue());
         }
     }
+
+    public function testGeoJSON()
+    {
+        $points = array(
+            array(54.123456, 28.765432), array(56.54321, 30.123),
+        );
+
+        $dimensions = new Dimensions();
+        foreach ($points as $point) {
+            $dimensions->expandGeoPoint(new GeoPoint($point[0], $point[1]));
+        }
+
+        $this->assertEquals(
+            '{"type":"MultiPoint","coordinates":[[54.123456,28.765432],[56.54321,30.123]]}',
+            json_encode($dimensions->toGeoJson())
+        );
+    }
 }
