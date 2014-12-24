@@ -13,7 +13,7 @@ use PHP2GIS\Angle\Longitude;
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT
  */
-class GeoPoint implements GeoJsonConvertableInterface
+class GeoPoint implements GeoJsonConvertibleInterface
 {
     /**
      * @var Latitude

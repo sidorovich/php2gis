@@ -3,14 +3,14 @@
 namespace PHP2GIS;
 
 /**
- * Interface GeoJSONInterface
+ * Interface GeoJsonConvertibleInterface
  *
  * @package PHP2GIS
  * @since   2014-12-23
  * @author  Pavel Sidorovich <p.sidorovich@gmail.com>
  * @license MIT
  */
-interface GeoJsonConvertableInterface
+interface GeoJsonConvertibleInterface
 {
     /**
      * Return associative array for encode to GeoJSON format
